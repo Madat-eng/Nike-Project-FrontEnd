@@ -1,7 +1,10 @@
+import Login from "./Components/Login";
+
 function App() {
   return (
-    <div className="container mt-5">
-      <h1>Hello, React with Bootstrap!</h1>
+    <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-dark">
+      <Login />
+
     </div>
   );
 }
