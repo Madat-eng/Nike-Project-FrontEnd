@@ -1,33 +1,45 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function Login() {
-  const [loginForm, setLoginForm] = useState({
-    Email: "",
+export default function Signup() {
+  const [signupForm, setSignupForm] = useState({
+    name: "",
+    email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Handle input changes dynamically
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setLoginForm((prev) => ({ ...prev, [name]: value }));
+    setSignupForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  // Submit the form
   const handleSubmit = async () => {
     setLoading(true);
     setError("");
 
+    if (signupForm.password !== signupForm.confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await axios.post("https://api.XXXXXXX.com/login", loginForm);
-      console.log("Login successful:", res.data);
-      // Navigate or save token here
+      const res = await axios.post("https://api.XXXXXXX.com/signup", {
+        name: signupForm.name,
+        email: signupForm.email,
+        password: signupForm.password,
+      });
+      console.log("Signup successful:", res.data);
+      // Handle successful registration
     } catch (err) {
       console.error(err);
-      setError("Login failed. Please check your credentials.");
+      setError("Signup failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -51,16 +63,28 @@ export default function Login() {
           />
         </div>
 
-        {/* Login Form */}
+        {/* Signup Form */}
         <div className="d-flex flex-column justify-content-center align-items-center h-100 ms-4 mt-4">
-          <label htmlFor="email" className="w-100 mb-3">
-            Username:
+          <label htmlFor="name" className="w-100 mb-3">
+            Full Name:
             <input
-              name="Email"
+              name="name"
+              type="text"
+              className="form-control mt-2"
+              placeholder="Full Name"
+              value={signupForm.name}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label htmlFor="email" className="w-100 mb-3">
+            Email:
+            <input
+              name="email"
               type="email"
               className="form-control mt-2"
               placeholder="Email"
-              value={loginForm.Email}
+              value={signupForm.email}
               onChange={handleChange}
             />
           </label>
@@ -72,7 +96,19 @@ export default function Login() {
               type="password"
               className="form-control mt-2"
               placeholder="Password"
-              value={loginForm.password}
+              value={signupForm.password}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label htmlFor="confirmPassword" className="w-100 mb-3">
+            Confirm Password:
+            <input
+              name="confirmPassword"
+              type="password"
+              className="form-control mt-2"
+              placeholder="Confirm Password"
+              value={signupForm.confirmPassword}
               onChange={handleChange}
             />
           </label>
@@ -86,7 +122,7 @@ export default function Login() {
             className="btn btn-danger w-50 mt-2"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
         </div>
       </div>

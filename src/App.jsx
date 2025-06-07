@@ -1,11 +1,17 @@
 import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-dark">
-      <Login />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} ></Route>
+        <Route path="/signup" element={<Signup />} />
 
-    </div>
+        {/* Add more routes here as needed */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
