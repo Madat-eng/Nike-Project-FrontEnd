@@ -1,0 +1,205 @@
+import { Link } from "react-router-dom";
+
+export default function Footer() {
+  const linkStyle = "text-decoration-none text-white mx-3";
+  const socialLinkStyle = `${linkStyle} fs-4`; // Larger icons for social media
+
+  return (
+    <footer className="bg-dark text-white p-4 mt-5">
+      <div className="container-fluid">
+        <div className="row justify-content-between">
+          {/* Nike Info Column */}
+          <div className="col-lg-4 mb-4">
+            <div className="d-flex align-items-center mb-3">
+              <div style={{ width: "50px" }} className="me-3">
+                <img
+                  src="/assets/NikeLogoWhite.png"
+                  alt="Nike Logo"
+                  className="img-fluid"
+                />
+              </div>
+              <h2 className="m-0 fs-3 fw-bold">Nike</h2>
+            </div>
+            <p className="text-muted">
+              Just Do It. Nike delivers innovative products, experiences and
+              services to inspire athletes worldwide.
+            </p>
+            <div className="d-flex">
+              <a
+                href="https://www.nike.com"
+                className={`${linkStyle} text-primary`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Official Website
+              </a>
+              <a
+                href="https://jobs.nike.com"
+                className={`${linkStyle} text-primary ms-3`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Careers
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links Column */}
+          <div className="col-lg-2 col-md-4 mb-4">
+            <h5 className="text-uppercase mb-3">Quick Links</h5>
+            <ul className="list-unstyled">
+              <li className="mb-2">
+                <Link to="/products" className={linkStyle}>
+                  All Products
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/men" className={linkStyle}>
+                  Men
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/women" className={linkStyle}>
+                  Women
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/kids" className={linkStyle}>
+                  Kids
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/new-releases" className={linkStyle}>
+                  New Releases
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Support Column */}
+          <div className="col-lg-2 col-md-4 mb-4">
+            <h5 className="text-uppercase mb-3">Support</h5>
+            <ul className="list-unstyled">
+              <li className="mb-2">
+                <Link to="/contact" className={linkStyle}>
+                  Contact Us
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/faq" className={linkStyle}>
+                  FAQ
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/shipping" className={linkStyle}>
+                  Shipping
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/returns" className={linkStyle}>
+                  Returns
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/order-status" className={linkStyle}>
+                  Order Status
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Social Media Column */}
+          <div className="col-lg-4 col-md-4">
+            <h5 className="text-uppercase mb-3">Connect With Us</h5>
+            <div className="d-flex mb-3">
+              <a
+                href="https://facebook.com/nike"
+                className={socialLinkStyle}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="bi bi-facebook"></i>
+              </a>
+              <a
+                href="https://twitter.com/nike"
+                className={socialLinkStyle}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="bi bi-twitter-x"></i>
+              </a>
+              <a
+                href="https://instagram.com/nike"
+                className={socialLinkStyle}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="bi bi-instagram"></i>
+              </a>
+              <a
+                href="https://youtube.com/nike"
+                className={socialLinkStyle}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="bi bi-youtube"></i>
+              </a>
+              <a
+                href="https://linkedin.com/company/nike"
+                className={socialLinkStyle}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="bi bi-linkedin"></i>
+              </a>
+            </div>
+
+            <h5 className="text-uppercase mb-3 mt-4">Company Info</h5>
+            <ul className="list-unstyled small">
+              <li className="mb-1">
+                <Link to="/about" className="text-muted">
+                  About Nike
+                </Link>
+              </li>
+              <li className="mb-1">
+                <Link to="/sustainability" className="text-muted">
+                  Sustainability
+                </Link>
+              </li>
+              <li className="mb-1">
+                <Link to="/news" className="text-muted">
+                  Newsroom
+                </Link>
+              </li>
+              <li className="mb-1">
+                <Link to="/investors" className="text-muted">
+                  Investors
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Copyright Section */}
+        <div className="row mt-4 pt-3 border-top">
+          <div className="col-md-6 text-center text-md-start">
+            <p className="text-muted small m-0">
+              © 2025 Nike, Inc. All Rights Reserved
+            </p>
+          </div>
+          <div className="col-md-6 text-center text-md-end">
+            <Link to="/privacy" className="text-muted small me-3">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-muted small me-3">
+              Terms of Use
+            </Link>
+            <Link to="/cookies" className="text-muted small">
+              Cookie Settings
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
