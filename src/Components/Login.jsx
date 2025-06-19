@@ -6,6 +6,7 @@ export default function Login() {
     Email: "",
     password: "",
   });
+  
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -19,6 +20,7 @@ export default function Login() {
   // Handle form submission
   const handleSubmit = async () => {
     setLoading(true);
+    //TODO: Replace with your API endpoint
     setError("");
 
     try {

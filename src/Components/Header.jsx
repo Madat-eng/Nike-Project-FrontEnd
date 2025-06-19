@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const linkStyle = "text-decoration-none text-white fs-5 mx-3"; 
+  const linkStyle = "text-decoration-none text-white fs-5 mx-3";
 
   return (
     <header className="bg-dark text-white p-3 sticky-top">
@@ -19,29 +19,46 @@ export default function Header() {
         </div>
 
         {/* Nav */}
-        <nav>
-          <ul className="d-flex list-unstyled m-0">
-            <li>
-              <Link to="/" className={linkStyle}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/store" className={linkStyle}>
-                Store
-              </Link>
-            </li>
-            <li>
-              <Link to="/signup" className={linkStyle}>
-                Sign Up
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className={linkStyle}>
-                Login
-              </Link>
-            </li>
-          </ul>
+        <nav className="navbar navbar-expand-md p-0">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarContent"
+            aria-controls="navbarContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <img
+              src="/public/assets/Burger Menu Icon.png"
+              alt="Menu"
+              style={{ width: "24px", height: "24px" }}
+            />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarContent">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link to="/" className={`nav-link ${linkStyle}`}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/store" className={`nav-link ${linkStyle}`}>
+                  Store
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/signup" className={`nav-link ${linkStyle}`}>
+                  Sign Up
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/login" className={`nav-link ${linkStyle}`}>
+                  Login
+                </Link>
+              </li>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>

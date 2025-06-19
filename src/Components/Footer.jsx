@@ -20,7 +20,7 @@ export default function Footer() {
               </div>
               <h2 className="m-0 fs-3 fw-bold">Nike</h2>
             </div>
-            <p className="text-muted">
+            <p className="text-gray-500 text-white ">
               Just Do It. Nike delivers innovative products, experiences and
               services to inspire athletes worldwide.
             </p>
@@ -157,22 +157,22 @@ export default function Footer() {
             <h5 className="text-uppercase mb-3 mt-4">Company Info</h5>
             <ul className="list-unstyled small">
               <li className="mb-1">
-                <Link to="/about" className="text-muted">
+                <Link to="/about" className="text-gray-500 text-white text-decoration-none">
                   About Nike
                 </Link>
               </li>
               <li className="mb-1">
-                <Link to="/sustainability" className="text-muted">
+                <Link to="/sustainability" className="text-gray-500 text-white text-decoration-none">
                   Sustainability
                 </Link>
               </li>
               <li className="mb-1">
-                <Link to="/news" className="text-muted">
+                <Link to="/news" className="text-gray-500 text-white text-decoration-none">
                   Newsroom
                 </Link>
               </li>
               <li className="mb-1">
-                <Link to="/investors" className="text-muted">
+                <Link to="/investors" className="text-gray-500 text-white text-decoration-none">
                   Investors
                 </Link>
               </li>
@@ -183,18 +183,27 @@ export default function Footer() {
         {/* Copyright Section */}
         <div className="row mt-4 pt-3 border-top">
           <div className="col-md-6 text-center text-md-start">
-            <p className="text-muted small m-0">
+            <p className="text-gray-500 text-white small m-0">
               © 2025 Nike, Inc. All Rights Reserved
             </p>
           </div>
           <div className="col-md-6 text-center text-md-end">
-            <Link to="/privacy" className="text-muted small me-3">
+            <Link
+              to="/privacy"
+              className="  text-white small me-3 text-decoration-none"
+            >
               Privacy Policy
             </Link>
-            <Link to="/terms" className="text-muted small me-3">
+            <Link
+              to="/terms"
+              className="  text-white small me-3 text-decoration-none"
+            >
               Terms of Use
             </Link>
-            <Link to="/cookies" className="text-muted small">
+            <Link
+              to="/cookies"
+              className="  text-white small me-3 text-decoration-none"
+            >
               Cookie Settings
             </Link>
           </div>

@@ -21,6 +21,7 @@ export default function Signup() {
   // Submit the form
   const handleSubmit = async () => {
     setLoading(true);
+    //TODO: Replace with your API endpoint
     setError("");
 
     if (signupForm.password !== signupForm.confirmPassword) {
@@ -31,6 +32,7 @@ export default function Signup() {
 
     try {
       const res = await axios.post("https://api.XXXXXXX.com/signup", {
+        //TODO: Replace with your API endpoint
         name: signupForm.name,
         email: signupForm.email,
         password: signupForm.password,
