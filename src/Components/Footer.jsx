@@ -157,22 +157,34 @@ export default function Footer() {
             <h5 className="text-uppercase mb-3 mt-4">Company Info</h5>
             <ul className="list-unstyled small">
               <li className="mb-1">
-                <Link to="/about" className="text-gray-500 text-white text-decoration-none">
+                <Link
+                  to="/about"
+                  className="text-gray-500 text-white text-decoration-none"
+                >
                   About Nike
                 </Link>
               </li>
               <li className="mb-1">
-                <Link to="/sustainability" className="text-gray-500 text-white text-decoration-none">
+                <Link
+                  to="/sustainability"
+                  className="text-gray-500 text-white text-decoration-none"
+                >
                   Sustainability
                 </Link>
               </li>
               <li className="mb-1">
-                <Link to="/news" className="text-gray-500 text-white text-decoration-none">
+                <Link
+                  to="/news"
+                  className="text-gray-500 text-white text-decoration-none"
+                >
                   Newsroom
                 </Link>
               </li>
               <li className="mb-1">
-                <Link to="/investors" className="text-gray-500 text-white text-decoration-none">
+                <Link
+                  to="/investors"
+                  className="text-gray-500 text-white text-decoration-none"
+                >
                   Investors
                 </Link>
               </li>

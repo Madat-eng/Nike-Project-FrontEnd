@@ -38,7 +38,7 @@ export default function Header() {
           <div className="collapse navbar-collapse" id="navbarContent">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/" className={`nav-link ${linkStyle}`}>
+                <Link to="/home" className={`nav-link ${linkStyle}`}>
                   Home
                 </Link>
               </li>

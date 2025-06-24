@@ -52,13 +52,15 @@ const Home = () => {
         <div
           className="hero-image"
           style={{
-            backgroundImage: "url('/assets/nike-hero.jpg')",
+            backgroundImage: "url('../../public/assets/Nike_MainPage.jpg')",
+
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "90vh",
             minHeight: "600px",
           }}
         >
+
           <div className="hero-overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
           <div className="hero-content position-absolute top-50 start-0 translate-middle-y w-100 ps-5">
             <div className="container">
