@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export default function Header() {
   const linkStyle = "text-decoration-none text-white fs-5 mx-3";
