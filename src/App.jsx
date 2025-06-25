@@ -16,7 +16,16 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/store" element={<Store />} />
+        <Route path="/store">
+          <Route index element={<Store />} />
+          <Route
+            path=":productId"
+            element={<div>This is Product Detals</div>}
+          />
+          <Route path="men" element={<div>This is Men's Products</div>} />
+          <Route path="women" element={<div>This is Women's Products</div>} />
+          <Route path="kids" element={<div>This is Kids' Products</div>} />
+        </Route>
         <Route path="/" element={<Home />} />
 
         {/* Add more routes here as needed */}

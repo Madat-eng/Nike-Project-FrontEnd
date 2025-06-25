@@ -54,17 +54,17 @@ export default function Footer() {
                 </Link>
               </li>
               <li className="mb-2">
-                <Link to="/men" className={linkStyle}>
+                <Link to="store/men" className={linkStyle}>
                   Men
                 </Link>
               </li>
               <li className="mb-2">
-                <Link to="/women" className={linkStyle}>
+                <Link to="store/women" className={linkStyle}>
                   Women
                 </Link>
               </li>
               <li className="mb-2">
-                <Link to="/kids" className={linkStyle}>
+                <Link to="store/kids" className={linkStyle}>
                   Kids
                 </Link>
               </li>
