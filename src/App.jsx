@@ -6,6 +6,9 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
 import Store from "./Components/Store";
+import MenProduct from "./Components/MenProduct";
+import WomenProduct from "./Components/WomenProduct";
+import KidsProduct from "./Components/KidsProduct";
 
 function App() {
   return (
@@ -22,9 +25,9 @@ function App() {
             path=":productId"
             element={<div>This is Product Detals</div>}
           />
-          <Route path="men" element={<div>This is Men's Products</div>} />
-          <Route path="women" element={<div>This is Women's Products</div>} />
-          <Route path="kids" element={<div>This is Kids' Products</div>} />
+          <Route path="men" element={<MenProduct />} />
+          <Route path="women" element={<WomenProduct />} />
+          <Route path="kids" element={<KidsProduct />} />
         </Route>
         <Route path="/" element={<Home />} />
 
