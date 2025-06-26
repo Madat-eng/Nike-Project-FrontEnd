@@ -44,6 +44,11 @@ export default function Header() {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link to="/cart" className={`nav-link ${linkStyle}`}>
+                  Cart
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/store" className={`nav-link ${linkStyle}`}>
                   Store
                 </Link>

@@ -10,7 +10,7 @@ export default function MenProduct() {
 
     useEffect(() => {
       
-        window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
         
     // Simulate API fetch
     // Giting Random prodicet from Database (use GIUD to randomize)
