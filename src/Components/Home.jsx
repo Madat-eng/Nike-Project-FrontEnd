@@ -1,52 +1,81 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CategoriesSection from "./CategoriesSection";
-import ProductCard from "./ProductCard"; 
-
-
+import ProductCard from "./ProductCard";
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    // Simulate API fetch
-    // Giting Random prodicet from Database (use GIUD to randomize)
-    const fetchProducts = async () => {
+    const abortController = new AbortController();
+
+    const fetchRandomProducts = async () => {
       try {
-        // In a real app, you would fetch from your backend
-        const mockProducts = [
+        setIsLoading(true);
+        setError(null);
+        const response = await fetch(
+          "https://localhost:7172/api/v1/Product/Random/3",
           {
-            id: 1,
-            name: "Air Jordan 1 Retro",
-            price: 180,
-            image: "/assets/jordan1.jpg",
-            category: "basketball",
-          },
-          {
-            id: 2,
-            name: "Nike Air Force 1 '07",
-            price: 110,
-            image: "/assets/airforce1.jpg",
-            category: "lifestyle",
-          },
-          {
-            id: 3,
-            name: "Nike Air Max 270",
-            price: 160,
-            image: "/assets/airmax270.jpg",
-            category: "running",
-          },
-        ];
-        setFeaturedProducts(mockProducts);
-        setIsLoading(false);
+            signal: abortController.signal,
+            headers: { Accept: "application/json" },
+          }
+        );
+
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+        setFeaturedProducts(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        if (error.name !== "AbortError") {
+          console.error("Error fetching products:", error);
+          setError("Failed to load products. Please try again later.");
+        }
+      } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchRandomProducts();
+
+    return () => abortController.abort();
+  }, []);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchCategories = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const response = await fetch("https://localhost:7172/api/v1/Category", {
+          headers: { Accept: "application/json" },
+          signal: abortController.signal,
+          // credentials: "include", // تم إزالة هذا السطر
+        });
+
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+        setCategories(Array.isArray(data) ? data : []);
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("Fetch categories error:", error);
+          setError("Failed to load categories. Please try again later.");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCategories();
+
+    return () => abortController.abort();
   }, []);
 
   return (
@@ -57,7 +86,6 @@ const Home = () => {
           className="hero-image"
           style={{
             backgroundImage: "url('../../public/assets/Nike_MainPage.jpg')",
-
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "90vh",
@@ -87,33 +115,33 @@ const Home = () => {
         <div className="container">
           <h2 className="text-center mb-5 fw-bold">FEATURED PRODUCTS</h2>
 
-          {isLoading ? (
+          {error ? (
+            <div className="alert alert-danger text-center">{error}</div>
+          ) : isLoading ? (
             <div className="text-center py-5">
               <div className="spinner-border text-dark" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>
+          ) : featuredProducts.length === 0 ? (
+            <div className="text-center py-5">
+              <h5>No products found.</h5>
+            </div>
           ) : (
-              
-    
             <div className="row g-4">
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id || product.productID || product.ProductID}
+                  product={product}
+                />
               ))}
             </div>
-            
-              
-              
-              
-              
-              
-     
           )}
         </div>
       </section>
 
       {/* Categories Section */}
-      <CategoriesSection />
+      <CategoriesSection categories={categories} />
 
       {/* Newsletter Section */}
       <section className="newsletter py-5 bg-dark text-white">

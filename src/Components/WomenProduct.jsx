@@ -1,53 +1,48 @@
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 
 export default function WomenProduct() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
     const fetchProducts = async () => {
       try {
-        const mockProducts = [
-          {
-            id: 4,
-            name: "Nike Air Max 90 Women's",
-            price: 130,
-            image: "/assets/airmax90-women.jpg",
-            category: "lifestyle",
-          },
-          {
-            id: 5,
-            name: "Nike Free RN Women's",
-            price: 100,
-            image: "/assets/freern-women.jpg",
-            category: "running",
-          },
-          {
-            id: 6,
-            name: "Nike Court Vision Women's",
-            price: 85,
-            image: "/assets/courtvision-women.jpg",
-            category: "casual",
-          },
-        ];
-        setFeaturedProducts(mockProducts);
-        setIsLoading(false);
+        setIsLoading(true);
+        setError(null);
+
+        const response = await fetch(
+          "https://localhost:7172/api/v1/Product/ByCategory/women"
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // توحيد id لكل منتج من productID
+        const productsWithId = Array.isArray(data)
+          ? data.map((p) => ({
+              ...p,
+              id: p.productID,
+            }))
+          : [];
+
+        setFeaturedProducts(productsWithId);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setError("Failed to load products. Please try again later.");
+      } finally {
         setIsLoading(false);
       }
     };
 
     fetchProducts();
   }, []);
-
-  // function StorePage() {
-  //     useEffect(() => {
-  //       window.scrollTo(0, 0); // ينتقل إلى الأعلى عند تحميل الصفحة
-  //     }, []);
 
   return (
     <>
@@ -85,11 +80,17 @@ export default function WomenProduct() {
       {/* Featured Products */}
       <section id="women-section" className="featured-products py-5 bg-light">
         <div className="container">
-          {isLoading ? (
+          {error ? (
+            <div className="alert alert-danger text-center">{error}</div>
+          ) : isLoading ? (
             <div className="text-center py-5">
               <div className="spinner-border text-dark" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
+            </div>
+          ) : featuredProducts.length === 0 ? (
+            <div className="text-center py-5">
+              <h5>No products found.</h5>
             </div>
           ) : (
             <div className="row g-4">

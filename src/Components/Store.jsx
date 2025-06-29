@@ -1,93 +1,75 @@
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import CategoriesSection from "./CategoriesSection";
-
 import ProductCard from "./ProductCard";
 
 const Store = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    // Simulate API fetch
-    // Giting Random prodicet from Database (use GIUD to randomize)
+    const abortController = new AbortController();
+
     const fetchProducts = async () => {
+      setIsLoading(true);
+      setError("");
+
       try {
-        // In a real app, you would fetch from your backend
-        const mockProducts = [
+        const response = await fetch(
+          "https://localhost:7172/api/v1/Product/GetAll",
           {
-            id: 1,
-            name: "Air Jordan 1 Retro",
-            price: 180,
-            image: "/assets/jordan1.jpg",
-            category: "basketball",
-          },
-          {
-            id: 2,
-            name: "Nike Air Force 1 '07",
-            price: 110,
-            image: "/assets/airforce1.jpg",
-            category: "lifestyle",
-          },
-          {
-            id: 3,
-            name: "Nike Air Max 270",
-            price: 160,
-            image: "/assets/airmax270.jpg",
-            category: "running",
-          },
-          {
-            id: 4,
-            name: "Nike Air Max 270",
-            price: 160,
-            image: "/assets/airmax270.jpg",
-            category: "running",
-          },
-          {
-            id: 5,
-            name: "Nike Air Max 270",
-            price: 160,
-            image: "/assets/airmax270.jpg",
-            category: "running",
-          },
-          {
-            id: 6,
-            name: "Nike Air Max 270",
-            price: 160,
-            image: "/assets/airmax270.jpg",
-            category: "running",
-          },
-        ];
-        setFeaturedProducts(mockProducts);
-        setIsLoading(false);
+            signal: abortController.signal,
+            headers: { Accept: "application/json" },
+          }
+        );
+
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+
+        // ضمان أن البيانات Array حتى لو السيرفر رجع شيء غلط
+        setFeaturedProducts(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        if (error.name !== "AbortError") {
+          console.error("Error fetching products:", error);
+          setError("Failed to load products. Please try again later.");
+        }
+      } finally {
         setIsLoading(false);
       }
     };
 
     fetchProducts();
+
+    return () => abortController.abort();
   }, []);
 
   return (
     <div className="store-page">
-      {/* Categories Section */}
       <CategoriesSection />
 
-      {/* Featured Products */}
       <section className="featured-products py-5 bg-light">
         <div className="container">
-          {isLoading ? (
+          {error ? (
+            <div className="alert alert-danger text-center">{error}</div>
+          ) : isLoading ? (
             <div className="text-center py-5">
               <div className="spinner-border text-dark" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>
+          ) : featuredProducts.length === 0 ? (
+            <div className="text-center py-5">
+              <h5>No products found.</h5>
+            </div>
           ) : (
             <div className="row g-4">
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id || product.productID}
+                  product={product}
+                />
               ))}
             </div>
           )}
