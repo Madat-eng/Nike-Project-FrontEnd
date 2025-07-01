@@ -1,12 +1,28 @@
-# React + Vite + Bootstrap Project
 
-This is a simple frontend project built with **React.js 19.1.0**, **Vite 6.3.5**, and **Bootstrap 5.3.6**. It serves as a clean starting point for building modern and responsive web applications.
+---
 
-## 📦 Technologies Used
+## 📁 **README.md - Front-End**
 
-- [React.js](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [Bootstrap 5](https://getbootstrap.com/)
-- [ESLint](https://eslint.org/) _(optional for code linting)_
+```markdown
+# Nike Dimo - Front-End
+
+This is the **Front-End** for the Nike Dimo E-Commerce project, built with **React.js** and styled using **Bootstrap**.
+
+The front-end communicates with the .NET 8 API to provide a responsive user interface for browsing and managing products.
+
+---
+
+## ⚒️ Technologies Used
+
+- React.js
+- Bootstrap
+- Axios (for API requests)
+- React Router
+
+---
 
 ## 🚀 Getting Started
+
+1. Navigate to this directory:
+   ```bash
+   cd Front-End

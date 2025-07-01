@@ -1,15 +1,15 @@
 import { useState } from "react";
-import axios from "axios";
 import ParticlesBackground from "./ParticlesBackground";
 
 export default function Login() {
   const [loginForm, setLoginForm] = useState({
-    Email: "",
+    email: "",
     password: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // Handle input changes dynamically
   const handleChange = (e) => {
@@ -20,13 +20,32 @@ export default function Login() {
   // Handle form submission
   const handleSubmit = async () => {
     setLoading(true);
-    //TODO: Replace with your API endpoint
     setError("");
+    setSuccess("");
 
     try {
-      const res = await axios.post("https://api.XXXXXXX.com/login", loginForm);
-      console.log("Login successful:", res.data);
-      // Navigate or save token here
+      const response = await fetch("https://localhost:7172/api/v1/User/Login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email: loginForm.email,
+          password: loginForm.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Login successful:", data);
+
+      setSuccess(`Welcome ${data.fullName}`);
+      // ممكن تخزن بيانات المستخدم أو تنتقل لصفحة ثانية هنا
+      setLoginForm({ email: "", password: "" });
     } catch (err) {
       console.error(err);
       setError("Login failed. Please check your credentials.");
@@ -38,7 +57,7 @@ export default function Login() {
   return (
     <div>
       <ParticlesBackground />
-      //////////////////////////////////HERE
+
       <div className="d-flex justify-content-center align-items-center vh-100">
         <div
           className="position-relative bg-secondary rounded-3 p-4 w-100 m-2"
@@ -59,13 +78,13 @@ export default function Login() {
           {/* Login Form */}
           <div className="d-flex flex-column justify-content-center align-items-center h-100 ms-4 mt-4">
             <label htmlFor="email" className="w-100 mb-3">
-              Username:
+              Email:
               <input
-                name="Email"
+                name="email"
                 type="email"
                 className="form-control mt-2"
                 placeholder="Email"
-                value={loginForm.Email}
+                value={loginForm.email}
                 onChange={handleChange}
               />
             </label>
@@ -83,7 +102,15 @@ export default function Login() {
             </label>
 
             {error && (
-              <div className="alert alert-danger w-70 text-center">{error}</div>
+              <div className="alert alert-danger w-100 text-center">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="alert alert-success w-100 text-center">
+                {success}
+              </div>
             )}
 
             <button

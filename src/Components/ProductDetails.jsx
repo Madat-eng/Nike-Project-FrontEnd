@@ -6,6 +6,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cartMessage, setCartMessage] = useState(null);
 
   const location = useLocation();
   const previousPath = location.state?.from || "/store";
@@ -52,6 +53,41 @@ export default function ProductDetails() {
 
     fetchProduct();
   }, [productId]);
+
+  const handleAddToCart = async () => {
+    if (!product?.id) {
+      setCartMessage("Invalid product data.");
+      return;
+    }
+
+    try {
+      setCartMessage(null);
+
+      const response = await fetch(
+        "https://localhost:7172/api/v1/BasketItems/AddItem",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userID: 7, 
+            productID: product.id,
+            quantity: 1,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      setCartMessage("Product added to cart successfully!");
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      setCartMessage("Failed to add product to cart.");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -105,10 +141,18 @@ export default function ProductDetails() {
           <h4 className="text-dark mb-3">${product.price}</h4>
           <p className="mb-4">{product.description}</p>
           <p className="mb-3">Available Pieces: {product.availablePiece}</p>
-          <button className="btn btn-dark btn-lg me-3">Add to Cart</button>
+          <button
+            className="btn btn-dark btn-lg me-3"
+            onClick={handleAddToCart}
+          >
+            Add to Cart
+          </button>
           <Link to={previousPath} className="btn btn-outline-dark btn-lg">
             Back to Products
           </Link>
+          {cartMessage && (
+            <div className="alert alert-info mt-3">{cartMessage}</div>
+          )}
         </div>
       </div>
     </div>

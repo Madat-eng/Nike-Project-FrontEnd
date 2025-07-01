@@ -1,10 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
 import ParticlesBackground from "./ParticlesBackground";
 
 export default function Signup() {
   const [signupForm, setSignupForm] = useState({
-    name: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -12,6 +11,7 @@ export default function Signup() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // Handle input changes
   const handleChange = (e) => {
@@ -22,8 +22,8 @@ export default function Signup() {
   // Submit the form
   const handleSubmit = async () => {
     setLoading(true);
-    //TODO: Replace with your API endpoint
     setError("");
+    setSuccess("");
 
     if (signupForm.password !== signupForm.confirmPassword) {
       setError("Passwords do not match.");
@@ -32,14 +32,35 @@ export default function Signup() {
     }
 
     try {
-      const res = await axios.post("https://api.XXXXXXX.com/signup", {
-        //TODO: Replace with your API endpoint
-        name: signupForm.name,
-        email: signupForm.email,
-        password: signupForm.password,
+      const response = await fetch(
+        "https://localhost:7172/api/v1/User/SignUp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            fullName: signupForm.fullName,
+            email: signupForm.email,
+            password: signupForm.password,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Signup successful:", data);
+      setSuccess(`Account created for ${data.email}`);
+      setSignupForm({
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
       });
-      console.log("Signup successful:", res.data);
-      // Handle successful registration
     } catch (err) {
       console.error(err);
       setError("Signup failed. Please try again.");
@@ -70,14 +91,14 @@ export default function Signup() {
 
           {/* Signup Form */}
           <div className="d-flex flex-column justify-content-center align-items-center h-100 ms-4 mt-4">
-            <label htmlFor="name" className="w-100 mb-3">
+            <label htmlFor="fullName" className="w-100 mb-3">
               Full Name:
               <input
-                name="name"
+                name="fullName"
                 type="text"
                 className="form-control mt-2"
                 placeholder="Full Name"
-                value={signupForm.name}
+                value={signupForm.fullName}
                 onChange={handleChange}
               />
             </label>
@@ -119,7 +140,14 @@ export default function Signup() {
             </label>
 
             {error && (
-              <div className="alert alert-danger w-70 text-center">{error}</div>
+              <div className="alert alert-danger w-100 text-center">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="alert alert-success w-100 text-center">
+                {success}
+              </div>
             )}
 
             <button

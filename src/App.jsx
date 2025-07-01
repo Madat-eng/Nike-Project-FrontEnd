@@ -11,6 +11,7 @@ import WomenProduct from "./Components/WomenProduct";
 import KidsProduct from "./Components/KidsProduct";
 import ProductDetails from "./Components/ProductDetails";
 import Cart from "./Components/Cart";
+import AdminProductManagement from "./Components/AdminProductManagement"
 
 function App() {
   return (
@@ -27,7 +28,9 @@ function App() {
           <Route path="men" element={<MenProduct />} />
           <Route path="women" element={<WomenProduct />} />
           <Route path="kids" element={<KidsProduct />} />
+          
         </Route>
+        <Route path="adminProductManagement" element = { <AdminProductManagement />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
